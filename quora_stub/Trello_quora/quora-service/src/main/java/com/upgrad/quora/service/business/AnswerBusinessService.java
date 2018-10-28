@@ -94,7 +94,7 @@ public class AnswerBusinessService {
             {
                 UserEntity userEntity = userDao.getUser(userAuthEntity.getUuid());
                 AnswerEntity answerEntity = getAnswerByAnswerId(answerId);
-                if((userEntity.getId() != (answerEntity.getUser().getId())) && (!userEntity.getRole().equalsIgnoreCase("admin")))
+                if((userEntity.getId() != (answerEntity.getUser().getId())) || (!userEntity.getRole().equalsIgnoreCase("admin")))
                 {
                     throw new AuthorizationFailedException("ATHR-003", "Only the question owner or admin can delete the question");
                 }
@@ -143,7 +143,7 @@ public class AnswerBusinessService {
             else if (answerEntity == null){
                 throw new AnswerNotFoundException("ANS-001", "Entered answer uuid does not exist");
             }
-            else if((userEntity.getId() != (answerEntity.getUser().getId())) && (!userEntity.getRole().equalsIgnoreCase("admin")))
+            else if((userEntity.getId() != (answerEntity.getUser().getId())) || (!userEntity.getRole().equalsIgnoreCase("admin")))
             {
                 throw new AuthorizationFailedException("ATHR-003", "Only the question owner or admin can delete the question");
             }else{
